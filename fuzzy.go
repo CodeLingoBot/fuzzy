@@ -267,7 +267,7 @@ func Levenshtein(a, b *string) int {
 	return d[la]
 }
 
-// Add an array of words to train the model in bulk
+// Train adds an array of words to train the model in bulk
 func (model *Model) Train(terms []string) {
 	for _, term := range terms {
 		model.TrainWord(term)
@@ -541,7 +541,7 @@ func (model *Model) suggestPotential(input string, exhaustive bool) map[string]*
 	return suggestions
 }
 
-// Return the raw potential terms so they can be ranked externally
+// Potentials returns the raw potential terms so they can be ranked externally
 // to this package
 func (model *Model) Potentials(input string, exhaustive bool) map[string]*Potential {
 	model.RLock()
@@ -561,7 +561,7 @@ func (model *Model) Suggestions(input string, exhaustive bool) []string {
 	return output
 }
 
-// Return the most likely correction for the input term
+// SpellCheck returns the most likely correction for the input term
 func (model *Model) SpellCheck(input string) string {
 	model.RLock()
 	suggestions := model.suggestPotential(input, false)
@@ -569,7 +569,7 @@ func (model *Model) SpellCheck(input string) string {
 	return best(input, suggestions)
 }
 
-// Return the most likely corrections in order from best to worst
+// SpellCheckSuggestions returns the most likely corrections in order from best to worst
 func (model *Model) SpellCheckSuggestions(input string, n int) []string {
 	model.RLock()
 	suggestions := model.suggestPotential(input, true)
